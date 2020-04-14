@@ -1,30 +1,29 @@
-import React from 'react';
 
 class TaxConcession {
-  value = 0;
+  maximumEligibility = 0;
 
-  constructor(concessionValue) {
-    this.value = concessionValue;
+  constructor(maximumEligibility) {
+    this.maximumEligibility = maximumEligibility;
   }
 
   get value() {
-    return this.value;
+    return this.maximumEligibility;
   }
 
   /**
    * Gets the tax concession for a given income. Its the lesser of the values income or
    *   concession
-   * @param incomeValue
+   * @param calculatedEligibility
    * @returns {number|*}
    */
-  calculateConcession(incomeValue) {
-    return Math.min(incomeValue, this.value);
+  calculateConcession(calculatedEligibility) {
+    return Math.min(calculatedEligibility, this.maximumEligibility);
   }
 }
 
 /**
- * An income with a label and a value
- *   e.g. {label: 'monthly salary', value: 100000}
+ * An income with a label and a maximumEligibility
+ *   e.g. {label: 'monthly salary', maximumEligibility: 100000}
  */
 class Income {
   value = 0;
@@ -36,9 +35,3 @@ class Income {
   }
 }
 
-class TaxFile {
-  concessions;
-  incomes;
-
-  
-}
