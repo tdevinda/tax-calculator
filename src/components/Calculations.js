@@ -1,37 +1,29 @@
+import React from 'react';
 
-class TaxConcession {
-  maximumEligibility = 0;
+function Calculation() {
+  const DEFAULT_CONCESSION = 300000;
+  const TAX_BLOCKS = [3000000, 3000000];
+  const BLOCK_RATES = [0.08, 0.14];
 
-  constructor(maximumEligibility) {
-    this.maximumEligibility = maximumEligibility;
+  function calculateTax(totalIncomes, totalConcessions) {
+    if (totalIncomes <= DEFAULT_CONCESSION) {
+      return 0;
+    }
+
+    let taxableIncome = totalIncomes - DEFAULT_CONCESSION - totalConcessions;
+
+    let totalTax = 0;
+    TAX_BLOCKS.map((blockValue, i) => {
+      if(taxableIncome > 0) {
+        totalTax += taxableIncome * BLOCK_RATES[i];
+        taxableIncome -= blockValue;
+      }
+    });
+
+    return totalTax;
   }
 
-  get value() {
-    return this.maximumEligibility;
-  }
 
-  /**
-   * Gets the tax concession for a given income. Its the lesser of the values income or
-   *   concession
-   * @param calculatedEligibility
-   * @returns {number|*}
-   */
-  calculateConcession(calculatedEligibility) {
-    return Math.min(calculatedEligibility, this.maximumEligibility);
-  }
 }
 
-/**
- * An income with a label and a maximumEligibility
- *   e.g. {label: 'monthly salary', maximumEligibility: 100000}
- */
-class Income {
-  value = 0;
-  label = '';
-
-  constructor(label, incomeValue) {
-    this.label = label;
-    this.value = incomeValue;
-  }
-}
-
+export default calculateTax;
