@@ -8,15 +8,13 @@ let salaryUnit = {
     {
       title: 'Fixed allowances',
       monthly: true
+    },
+    {
+      title: 'All bonus payments',
+      monthly: false
     }
-  ],
-  concession: {
-    title: 'Concession on base salary',
-    type: 'block',
-    value: 3000000,
-    limit: 3000000,
-    effectiveOn: 'incomes'
-  }
+
+  ]
 };
 
 let loanUnit = {
