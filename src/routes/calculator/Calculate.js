@@ -5,42 +5,34 @@ import Container from "@material-ui/core/Container/Container";
 import { TAXUNITS } from './DummyTaxDetails';
 import TaxDetailDisplay from "./TaxDetailDisplay";
 import Grid from "@material-ui/core/Grid/Grid";
+import { calculateTax} from "../../components/Calculations";
 
 function Calculate() {
   let taxUnits = TAXUNITS;
-  const [taxDetails, setTaxDetails] = useState(new Array(taxUnits.length));
+  const [taxDetails, setTaxDetails] = useState(taxUnits);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalConcession, setTotalConcession] = useState(0);
+  const [totalPayable, setTotalPayable] = useState(0);
 
-  useEffect(() => {
-    updateTotals();
-  });
+
   function updateTaxDetails(id, taxDetailsObject) {
     let updatedTaxDetails = [...taxDetails];
     updatedTaxDetails[id] = taxDetailsObject;
     setTaxDetails(updatedTaxDetails);
 
   }
+  //when details are updated anytime, rin the total update function
+  useEffect(() => {
+    updateTotals();
+  });
 
   function updateTotals() {
-    let totalCalculatedIncome = 0;
-    let totalCalculatedConcessions = 0;
-    // console.log(taxDetails);
-    taxDetails.map((taxDetail, index) => {
-      if(taxDetail && taxDetail.incomes) {
-        taxDetail.incomes.map((item, i) => {
-          totalCalculatedIncome += item?item:0;
-        });
-      }
-      if (taxDetail && taxDetail.expenses) {
-        taxDetail.expenses.map((item, i) => {
-          totalCalculatedConcessions += item?item:0;
-        });
-      }
-    });
+    console.log(taxDetails);
+    let taxOutcome = calculateTax(taxDetails);
+    setTotalIncome(taxOutcome.totalIncomes);
+    setTotalPayable(taxOutcome.totalTax);
+    setTotalConcession(taxOutcome.totalConcessions);
 
-    setTotalIncome(totalCalculatedIncome);
-    setTotalConcession(totalCalculatedConcessions);
   }
 
   return (
@@ -48,13 +40,13 @@ function Calculate() {
     <Container>
       <Grid container>
         <Grid item xs={12} sm={6}>
-          <TaxDetailDisplay totalIncome={totalIncome} totalConcession={totalConcession}/>
+          <TaxDetailDisplay totalIncome={totalIncome} totalConcession={totalConcession} totalPayable={totalPayable}/>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">This is the calculation area</Typography>
           {
             taxUnits.map((unit, id) => {
-              return (<TaxUnit taxunit={unit} callback={(taxDetail) => updateTaxDetails(id, taxDetail)}/>)
+              return (<TaxUnit id={id} taxunit={unit} callback={(updatedTaxUnit) => updateTaxDetails(id, updatedTaxUnit)}/>)
             })
           }
         </Grid>
