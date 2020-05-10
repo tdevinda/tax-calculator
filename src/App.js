@@ -18,11 +18,12 @@ function App() {
 
           <div>
             <Switch>
-              <Route path={HOME_PATH}>
-                <Home/>
-              </Route>
-              <Route path={CALCULATOR_PATH}>
-                <Calculate/>
+              <PrivateRoute component={Home} path={HOME_PATH}>
+              </PrivateRoute>
+              <PrivateRoute path={CALCULATOR_PATH} component={Calculate}>
+              </PrivateRoute>
+              <Route path="/login">
+                <Login/>
               </Route>
               <Route path="/">
                 <Intro/>
