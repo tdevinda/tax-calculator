@@ -14,19 +14,32 @@ function Navigation() {
           <Avatar
             src='/img/tax.svg' />
         </IconButton>
-        <Typography variant="h6"> Tax Calculator</Typography>
-        <Button
-          component={Link}
-          to={HOME_PATH}
-        >
-          Home
-        </Button>
-        <Button
-          component={Link}
-          to={CALCULATOR_PATH}
-        >
-          Calculator
-        </Button>
+        <Typography variant="h6">lankaincome.tax</Typography>
+        { currentUser.currentUser ? (
+          <>
+            <Button
+              component={Link}
+              to={HOME_PATH}
+            >
+              Home
+            </Button>
+            <Button
+              component={Link}
+              to={CALCULATOR_PATH}
+            >
+              Calculator
+            </Button>
+            <Button onClick={() => {firebaseApp.auth().signOut()}}>
+              Logout
+            </Button>
+          </>
+        ) : (
+          <Button
+            component={Link}
+            to='/login'>
+            Login
+          </Button>
+        )}
       </ToolBar>
     </AppBar>
 

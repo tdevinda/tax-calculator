@@ -9,7 +9,7 @@ import CardContent from "@material-ui/core/CardContent/CardContent";
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 
-const useStyles = makeStyles(styles)
+const useStyles = makeStyles(styles);
 
 function TaxUnit(props) {
   const classes = useStyles();

@@ -1,18 +1,67 @@
 import React from 'react';
-import styles from './Home.styles'
+import AppBar from '@material-ui/core/AppBar';
 import Button from '@material-ui/core/Button';
+import CameraIcon from '@material-ui/icons/PhotoCamera';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
+import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-import Copyright from "../../components/Copyright";
-import {CALCULATOR_PATH} from "../../navi/paths";
 
-const useStyles = makeStyles(styles);
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://lankaincome.tax/">
+        LankaIncome.tax
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 
-export default function Home() {
+const useStyles = makeStyles((theme) => ({
+  icon: {
+    marginRight: theme.spacing(2),
+  },
+  heroContent: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(8, 0, 6),
+  },
+  heroButtons: {
+    marginTop: theme.spacing(4),
+  },
+  cardGrid: {
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
+  },
+  card: {
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  cardMedia: {
+    paddingTop: '56.25%', // 16:9
+  },
+  cardContent: {
+    flexGrow: 1,
+  },
+  footer: {
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(6),
+  },
+}));
+
+const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+export default function Intro({display}) {
   const classes = useStyles();
 
   return (
@@ -20,11 +69,14 @@ export default function Home() {
       <CssBaseline />
 
       <main>
-
+        {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-              Welcome to lankaincome.tax
+              Basic Income Tax Calculator
+            </Typography>
+            <Typography component="h1" variant="h3" align="center" color="textPrimary" gutterBottom>
+              for Sri Lankan Income Tax Payers
             </Typography>
             <Typography variant="h5" align="center" color="textSecondary" paragraph>
               This project aims to simplify the income tax calculation for people who have been used to paying PAYE tax
@@ -34,8 +86,8 @@ export default function Home() {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary" component={Link} to={CALCULATOR_PATH}>
-                    Go to calculation
+                  <Button variant="contained" color="primary">
+                    {(display === 'login')?'Sign In to Calculate':'Go to Calculation'}
                   </Button>
                 </Grid>
                 <Grid item>
@@ -47,7 +99,10 @@ export default function Home() {
             </div>
           </Container>
         </div>
+        <Container className={classes.cardGrid} maxWidth="md">
+          {/* End hero unit */}
 
+        </Container>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
